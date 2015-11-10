@@ -12,8 +12,8 @@ var path = req.url.split("/")
 // /save/name
 
 
-if (path[0] == "get") {
-users.get(path[1], function (user) {
+if (path[1] == "get") {
+users.get(path[2], function (user) {
 
 var response = {
 	info: "here your user",
@@ -23,8 +23,8 @@ var response = {
 	res.end(JSON.stringify(response));
 	})
 	
-} else if (path[0] == "save") {
-users.save(path[1], function (user) {
+} else if (path[1] == "save") {
+users.save(path[2], function (user) {
 var response = {
 	info: "user saved",
 	user: user
