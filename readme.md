@@ -1,16 +1,10 @@
-# first level title
+# ECE-node.js  
 
-2 space at the en of line to backspace  
+## Goals  
 
-```json
-{
-"Hello": "here some code "
-}  
-```
+### Usage  
 
-## second level title
+####Contributors  
 
-
-` quote `  
-
-licence ...
+Sterling Colemam  
+Paul Rauber  
