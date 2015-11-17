@@ -3,7 +3,7 @@ var users = require('../lib/users.js');
 
 describe('User tests', function() {
   it('should save user', function(done) {
-    
+
       var testUser = { id: "1111", name: "Sterling" };
 
       users.save(user.name, function (testUser) {
@@ -14,3 +14,4 @@ describe('User tests', function() {
       done();
     });
   });
+;
