@@ -8,11 +8,12 @@ describe('User tests', function() {
 
       users.save(user.name, function (testUser) {
 
-      user.should.have.property("name", "Sterling");
-      user.should.have.property("id", "2222");
+        user.should.have.property("name", "Sterling");
+        user.should.have.property("id", "2222");
 
-      done();
-    });
+        done();
+      });
+  });
 
   it('should get user', function(done) {
 
@@ -20,10 +21,14 @@ describe('User tests', function() {
 
       users.get(user.id, function (testUser) {
 
-      user.should.have.property("name", "cesar");
-      user.should.have.property("id", "1111");
+        user.should.have.property("name", "cesar");
+        user.should.have.property("id", "1111");
 
-      done();
-    });
+        done();
+      });
   });
+<<<<<<< HEAD
 ;
+=======
+});
+>>>>>>> b7b7705f65283c833c2a31fc067d6e9811a7ee64
