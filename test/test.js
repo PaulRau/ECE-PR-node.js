@@ -13,4 +13,16 @@ describe('User tests', function() {
 
       done();
     });
+
+  it('should get user', function(done) {
+
+      var testUser = { id: "1111", name: "Sterling" };
+
+      users.get(user.id, function (testUser) {
+
+      user.should.have.property("name", "cesar");
+      user.should.have.property("id", "1111");
+
+      done();
+    });
   });
