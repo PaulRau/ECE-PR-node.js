@@ -27,8 +27,7 @@ describe('User tests', function() {
         done();
       });
   });
-<<<<<<< HEAD
-;
-=======
+
+
 });
->>>>>>> b7b7705f65283c833c2a31fc067d6e9811a7ee64
+
