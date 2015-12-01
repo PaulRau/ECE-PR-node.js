@@ -1,20 +1,18 @@
 {
-	"name": "Asynchronous Server Technology",
-	"description": "class @ ece",
-	"version": "0.0.1",
-	"author": {
-		"name": "cesar",
-		"website": "github.com/cesarBere"
-		},
-	"dependencies": {
-		"mymodule": "1.2.y",
-		"mymodule": "~1.2.x",
-		"mymodule": ">=1.2.z",
-		"mymodule": "*",
-		"mylocalmodul": "file:./server.js",
-		"mygithubmodul": "git_account/module"
-		},
-	"devDependencies": {
-		"test-module": "*"
-		}
+  "name": "Asynchronous Server Technology",
+  "description": "class @ ece",
+  "version": "0.0.1",
+  "author": {
+    "name": "cesar",
+    "website": "github.com/cesarBere"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "mygithubmodul": "git_account/module",
+    "mylocalmodul": "file:./server.js",
+    "mymodule": "*"
+  },
+  "devDependencies": {
+    "test-module": "*"
+  }
 }
