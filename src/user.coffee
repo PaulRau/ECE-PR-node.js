@@ -2,7 +2,7 @@ user = require('./db') "#{__dirname}/../db/user"
 
 module.exports =
   get: (username, callback) ->
-    user= {}
+    user = {}
     readstream = user.createReadStream
       gte: "user:#{username}"
       lte: "user:#{username}"
@@ -17,7 +17,7 @@ module.exports =
       callback null, user
 
   save: (username, password, name, email, callback) ->
-    writestream = user.createWriteStream
+    writestream = user.createWriteStream()
     writestream.write key: "user:#{username}", value: "user:#{name}:#{password}:#{email}"
     console.log "User saved to database."
 

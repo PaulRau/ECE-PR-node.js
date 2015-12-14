@@ -1,0 +1,23 @@
+extend layout
+
+block content
+  h1 Please Enter Account Information
+  hr
+  form(action='/signup', method="post")
+    .form-group
+      label Username
+      input(type='text', name="username")
+    br
+    .form-group
+      label Name
+      input(type='text', name="name")
+    br
+    .form-group
+      label Password
+      input(type='password', name="password")
+    br
+    .form-group
+      label Email
+      input(type='text', name="email")
+    br
+    button(type="submit") Sign Up
