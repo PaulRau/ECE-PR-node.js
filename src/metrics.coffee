@@ -4,22 +4,25 @@ module.exports =
 
   ### 
   `get()`
-  ———————
+  -------
   returns some hard-coded metrics
   ###
 
-  get: () ->
-    return [
-      timestamp:(new Date '2013-11-04 14:00 UTC').getTime(), value:12
-    ,
-      timestamp:(new Date '2013-11-04 14:35 UTC').getTime(), value:15
-    ,
-      timestamp:(new Date '2013-11-04 14:40 UTC').getTime(), value:17
-    ,
-      timestamp:(new Date '2013-11-04 14:45 UTC').getTime(), value:18
-    ,
-      timestamp:(new Date '2013-11-04 14:50 UTC').getTime(), value:19
-  ]
+  get: (username, callback) ->
+    metrics = {}
+    metric = {}
+    readstream = db.createReadStream
+      gte: "metrics:#{username}"
+      lte: "metrics:#{username}"
+    readstream.on 'data', (data) ->
+      value = data.value.split ':'
+      metric.push(timestamp: value[1], value[2])
+      return metric
+
+    readstream.on 'error', callback
+
+    readstream.on 'close', ->
+      callback null, metric
 
   ###
   save(id, metrics ,cb)
@@ -29,14 +32,17 @@ module.exports =
   Parameters:
   'id': an integer defining a batch of metrics
   'metric': An array of objects with a timestamp and a value
-  'callback": Callback function called at the end or on error
+  'callback': Callback function called at the end or on error
   ###
 
   save: (id, metrics, callback) ->
     ws = db.createWriteStream()
+
     ws.on 'error', callback
+
     ws.on 'close', callback
-    for metric in metrics
+    for metric, count in metrics
       {timestamp, value} = metric
-      ws.write key: "metric:#{id}:#{timestamp}", value: value
+      ws.write key: "metric:#{id}:#{count+1}", value: "metrics:#{timestamp}:#{value}"
+    console.log "Metrics saved."
     ws.end()

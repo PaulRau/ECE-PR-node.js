@@ -1,7 +1,7 @@
 #import a module
 
 http = require('http')
-users = require('./users.js')
+user = require('./user.js')
 
 #declare a http server
 
@@ -12,27 +12,24 @@ http.createServer((req, res) ->
   # /save/name
 
   if path[1] == 'get'
-    users.get path[2], (user) ->
+    user.get path[2], (user) ->
       response = 
-        info: 'here your user'
+        info: 'Information the User'
         user: user
       res.writeHead 200, content: 'application/json'
       res.end JSON.stringify(response)
       return
   else if path[1] == 'save'
-    users.save path[2], (user) ->
+    user.save path[2], (user) ->
       response = 
-        info: 'user saved'
+        info: 'The user was saved'
         user: user
       res.writeHead 200, content: 'application/json'
       res.end JSON.stringify(response)
       return
   else
     res.writeHead 404, content: 'text/plain'
-    res.end 'not a good path'
-
-  #write a response header
-  #res.writeHead(200, {content: 'application/json'});
+    res.end '404 Error : Not Found'
 
   return
 ).listen 1337, '127.0.0.1'
