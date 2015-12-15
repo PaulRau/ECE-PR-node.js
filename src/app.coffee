@@ -11,7 +11,7 @@ user = require './user'
 app.set 'port', 1889
 app.set 'views', "#{__dirname}/../views"
 app.set 'view engine', 'jade'
-app.use morgan
+app.use morgan 'dev'
 app.use bodyparser.json()
 app.use bodyparser.urlencoded()
 app.use '/', express.static "#{__dirname}/../public"
@@ -29,6 +29,7 @@ authCheck = (request, response, next) ->
     next()
 
 app.get '/', authCheck, (request, response) ->
+  console.log "get request on root dir"
   response.render 'index'
     ,name: "{request.session.username}"
       ,title: "Paul & Sterling's Test Page"
@@ -36,7 +37,7 @@ app.get '/', authCheck, (request, response) ->
 app.get '/metrics.json', (request, response) ->
   response.status(200).JSON metrics.get()
 
-app.get '/hello/:name', (request, response) -> 
+app.get '/hello/:name', (request, response) ->
   response.status(200).send request.params.name
 
 app.get '/login', (request, response) ->
@@ -65,7 +66,7 @@ app.post 'signup', (request, response) ->
     request.session.username = request.body.username
     response.redirect '/'
 
-app.post '/metrics/:id.json', (request, response) -> 
+app.post '/metrics/:id.json', (request, response) ->
   metric.save request.params.id, request.body, (error) ->
     if err then response.status(500).json error
     response.status(200).send "Metrics Saved"
