@@ -8,23 +8,21 @@ app = express()
 metrics = require './metrics'
 user = require './user'
 
-app.set 'port', 1337
+app.set 'port', 1889
 app.set 'views', "#{__dirname}/../views"
 app.set 'view engine', 'jade'
-app.use morgan
-app.use bodyparser.json()
-app.use bodyparser()
 app.use '/', express.static "#{__dirname}/../public"
-
+app.use bodyparser
+app.use morgan 'dev'
 app.use session
   secret: 'MyAppSecret'
-  store: new LevelStore './db/sessions'
+  store: new LevelStore '../db/sessions'
   resave: true
   saveUnitialized: true
 
 authCheck = (request, response, next) ->
   unless request.session.loggedIn == true
-    response.redirect '/loginx'
+    response.redirect '/login'
   else
     next()
 
@@ -36,13 +34,10 @@ app.get '/', authCheck, (request, response) ->
 app.get '/metrics.json', (request, response) ->
   response.status(200).JSON metrics.get()
 
-app.get '/hello/:name', (request, response) ->
-  response.status(200).send request.params.name
-
 app.get '/login', (request, response) ->
   response.render 'login'
 
-app.post 'login', (request, response) ->
+app.post '/login', (request, response) ->
   user.get request.body.username, (error, data) ->
     if error then throw error
     unless request.body.password == data.password
@@ -72,3 +67,8 @@ app.post '/metrics/:id.json', (request, response) ->
 
 app.listen app.get('port'), () ->
   console.log "server listening on #{app.get 'port'}"
+
+app.get '/logout', (request, response) ->
+  delete request.session.loggedIn
+  delete request.session.username
+  response.rediret '/login'

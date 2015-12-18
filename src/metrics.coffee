@@ -1,5 +1,7 @@
 db = require('./db') "#{__dirname}/../db/metrics"
 
+nextKey = null
+
 module.exports =
 
   ### 
@@ -36,13 +38,29 @@ module.exports =
   ###
 
   save: (id, metrics, callback) ->
-    ws = db.createWriteStream()
+    if !id
+      if !nextKey
+        keyStream = db.createKeyStream
+          reverse: true
+          limit: true
+        keyStream.on 'data', (data) ->
+          if data
+            nextKey = parseInt data
+          else
+            nextKey = 0
+          nextKey++
+          metrics.id = nextKey
+          db.put nextKey, metrics, (error) ->
+            callback(metrics.id, error)
+      else
+        nextKey++
+        metrics.id = nextKey
+        db.put nextKey, metrics, (error) ->
+          callback(metrics.id, error)
+    else
+      metrics.id = id
+      db.put id, metrics, (error) ->
+        callback(metrics.id, error)
 
-    ws.on 'error', callback
-
-    ws.on 'close', callback
-    for metric, count in metrics
-      {timestamp, value} = metric
-      ws.write key: "metric:#{id}:#{count+1}", value: "metrics:#{timestamp}:#{value}"
-    console.log "Metrics saved."
-    ws.end()
+  delete: (id, callback) ->
+    db.del id, callback
