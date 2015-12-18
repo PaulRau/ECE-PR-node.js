@@ -8,12 +8,12 @@ app = express()
 metrics = require './metrics'
 user = require './user'
 
-app.set 'port', 1889
+app.set 'port', 1337
 app.set 'views', "#{__dirname}/../views"
 app.set 'view engine', 'jade'
-app.use morgan
+app.use morgan 
 app.use bodyparser.json()
-app.use bodyparser.urlencoded()
+app.use bodyparser()
 app.use '/', express.static "#{__dirname}/../public"
 
 app.use session
@@ -24,14 +24,14 @@ app.use session
 
 authCheck = (request, response, next) ->
   unless request.session.loggedIn == true
-    response.redirect '/login'
+    response.redirect '/loginx'
   else
     next()
 
 app.get '/', authCheck, (request, response) ->
-  response.render 'index'
-    ,name: "{request.session.username}"
-      ,title: "Paul & Sterling's Test Page"
+  response.render 'index',
+    name: request.session.username
+    title: "Paul & Sterling's Test Page"
 
 app.get '/metrics.json', (request, response) ->
   response.status(200).JSON metrics.get()
@@ -71,4 +71,4 @@ app.post '/metrics/:id.json', (request, response) ->
     response.status(200).send "Metrics Saved"
 
 app.listen app.get('port'), () ->
-console.log "server listening on #{app.get 'port'}"
+  console.log "server listening on #{app.get 'port'}"

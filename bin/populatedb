@@ -1,11 +1,32 @@
 #!/usr/bin/env coffee
 
-metric = require '../src/metrics'
-met = [
-  timestamp:(new Date '2013-11-04 14:00 UTC').getTime(), value:12
-,
-  timestamp:(new Date '2013-11-04 14:10 UTC').getTime(), value:13
-]
-metric.save 0, met, (err) ->
-  if err then throw err
-  console.log 'Metrics saved'
+exec = require('child_process').exec
+
+exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (error, standardOut, standardError) ->
+  if error then throw error
+
+  # Require after rm and mkdir or DB is deleted once in the callback.
+  metrics = require '../src/metrics'
+
+  console.log 'DB deleted'
+  console.log 'Creating metrics'
+  met = [
+    name: "metric 1"
+    data:
+      [
+        timestamp: new Date('2015-12-16 16:42 UTC').getTime(), value: 1
+      ]
+  , 
+    name: "metric 2"
+    data:
+      [
+        timestamp: new Date('2015-12-16 12:00 UTC').getTime(), value: 2
+      ]
+  ]
+
+  console.log met
+
+  for mx, count in met
+    console.log "Saving set #{count + 1} :" + mx.name
+    metrics.save count + 1, mx, (error) ->  return error if error
+
