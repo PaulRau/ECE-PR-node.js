@@ -14,7 +14,7 @@ This application is a simple dashboard where we can:
 
 - Download the repository and the necessary node modules (cf package.json)
 - Launch `.bin/populated` in order to populate the data base with metrics
-- Launch the app in src/ `coffee app.coffe` to launch the application or use the script `.bin/launch`
+- Launch the app in src/ `coffee app.coffee` to launch the application or use the script `.bin/start.sh`
 - Create or use a user, login then choose your metrics to be displayed
 
 ## Other
