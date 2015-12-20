@@ -3,7 +3,7 @@ extend layout
 block head
   script(type="text/javascript" src="js/jquery-2.1.4.min.js" charset="utf-8")
   script(type="text/javascript" src="js/bootstrap.min.js" charset="utf-8")
-  link(rel='stylesheet', href='/css/bootstrap.min.css')
+  link(rel="stylesheet", href="/css/bootstrap.min.css")
 
 block content
   div.container
@@ -18,6 +18,6 @@ block content
           $.getJSON "/metrics.json", {}, (data) ->
             $('#content').empty()
             content = ""
-            for d in data 
+            for d in data
               content += "<p>timestamp: #{d.timestamp}, value: #{d.value}</p>"
             $('#metrics').append content

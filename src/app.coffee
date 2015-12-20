@@ -18,7 +18,7 @@ app.use session
   secret: 'MyAppSecret'
   store: new LevelStore '../db/sessions'
   resave: true
-  saveUnitialized: true
+  saveUninitialized: true
 
 authCheck = (request, response, next) ->
   unless request.session.loggedIn == true

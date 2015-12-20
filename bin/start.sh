@@ -1,2 +1,2 @@
 /#!/usr/bin/env bash
-./bin/.server.js
+coffee src/app.coffee

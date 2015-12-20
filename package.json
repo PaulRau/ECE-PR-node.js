@@ -3,8 +3,8 @@
   "description": "class @ ece",
   "version": "0.0.1",
   "author": {
-    "name": "cesar",
-    "website": "github.com/cesarBere"
+    "name": "Rauber_Coleman",
+    "website": "github.com/PaulRau/ECE-node.js"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
